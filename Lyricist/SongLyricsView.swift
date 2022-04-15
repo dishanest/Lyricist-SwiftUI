@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SongLyricsView: View {
-    @Environment(\.presentationMode) var presentationMode
-    let song: Song
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var song: Song
     
     private var headerText: some View {
         HStack {
@@ -90,6 +90,16 @@ struct SongLyricsView: View {
                         .foregroundColor(.white)
                         .shadow(color: .black, radius: 4, x: 0, y: 0)
                 }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    song.isFavorite.toggle()
+                } label: {
+                    Image(systemName: song.isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(.yellow)
+                }
+                .frame(width: 22, height: 22)
             }
         }
         .edgesIgnoringSafeArea(.all)

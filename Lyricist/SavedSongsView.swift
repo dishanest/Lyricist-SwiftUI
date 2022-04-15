@@ -8,39 +8,71 @@
 import SwiftUI
 
 struct SavedSongsView: View {
-    let songs: [Song] = Song.data
+    @State var filterFavorites: Bool = false
+    @State var selectedSong: Song?
+    @State var songs: [Song] = Song.data
     
-    private var title: some View {
-        Text("LYRICIST")
-            .font(.largeTitle)
-            .foregroundColor(.yellow)
-    }
-    
-    private var subtitle: some View {
-        HStack {
+    private var header: some View {
+        VStack(spacing: 10) {
+            HStack {
+                Spacer()
+                
+                ZStack {
+                    Text("LYRICIST")
+                        .font(.system(.title, design: .rounded).weight(.semibold))
+                        .kerning(7)
+                        .foregroundColor(.yellow)
+                    Text("LYRICIST")
+                        .font(.system(.title, design: .rounded).weight(.semibold))
+                        .kerning(7)
+                        .foregroundColor(.black)
+                        .offset(x: 2, y: -2)
+                }
+                
+                Spacer()
+                    .frame(width: 10)
+                
+                Button {
+                    filterFavorites.toggle()
+                } label: {
+                    Image(systemName: filterFavorites ? "heart.fill" : "heart")
+                        .foregroundColor(.yellow)
+                }
+                
+                Spacer()
+            }
+            
+            HStack {
+                Spacer()
+                
+                Text("SAVED SONGS")
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Rectangle()
+                    .frame(width: 230, height: 2)
+                    .foregroundColor(.white)
+                
+                Spacer()
+            }
+            
             Spacer()
-            
-            Text("SAVED SONGS")
-                .font(.subheadline)
-                .foregroundColor(.white)
-            
-            Spacer()
-            
-            Rectangle()
-                .frame(width: 230, height: 2)
-                .foregroundColor(.white)
-            
-            Spacer()
+                .frame(height: 10)
         }
     }
     
     private var songsList: some View {
         ScrollView(.vertical, showsIndicators: true) {
-            VStack(alignment: .leading) {
-                ForEach(songs, id: \.self) { song in
-                    NavigationLink {
-                        SongLyricsView(song: song)
-                    } label: {
+            ForEach($songs, id: \.hashValue) { song in
+//                SavedSongRow(song: $song)
+//                    .onTapGesture {
+//                        print("yeet")
+//                        selectedSong = song
+//                    }
+                if song.wrappedValue.isFavorite || !filterFavorites {
+                    NavigationLink(destination: SongLyricsView(song: song)) {
                         SavedSongRow(song: song)
                     }
                 }
@@ -50,9 +82,7 @@ struct SavedSongsView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            title
-            subtitle
-                .padding(.vertical, 10)
+            header
             songsList
         }
     }

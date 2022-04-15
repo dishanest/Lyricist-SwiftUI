@@ -11,8 +11,17 @@ struct Song: Hashable {
     let albumName: String
     let artistNames: [String]
     let imageName: String
+    var isFavorite: Bool = false
     let lyrics: String
     let title: String
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(albumName)
+        hasher.combine(artistNames)
+        hasher.combine(imageName)
+        hasher.combine(lyrics)
+        hasher.combine(title)
+    }
 }
 
 extension Song {

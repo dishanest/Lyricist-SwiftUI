@@ -66,12 +66,7 @@ struct SavedSongsView: View {
     private var songsList: some View {
         ScrollView(.vertical, showsIndicators: true) {
             ForEach($songs, id: \.hashValue) { song in
-//                SavedSongRow(song: $song)
-//                    .onTapGesture {
-//                        print("yeet")
-//                        selectedSong = song
-//                    }
-                if song.wrappedValue.isFavorite || !filterFavorites {
+                if song.isFavorite.wrappedValue || !filterFavorites {
                     NavigationLink(destination: SongLyricsView(song: song)) {
                         SavedSongRow(song: song)
                     }

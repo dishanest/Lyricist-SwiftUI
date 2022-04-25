@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SavedSongsView: View {
     @State var filterFavorites: Bool = false
-    @State var selectedSong: Song?
     @State var songs: [Song] = Song.data
     
     private var header: some View {

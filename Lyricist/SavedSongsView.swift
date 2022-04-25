@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SavedSongsView: View {
-    @State var filterFavorites: Bool = false
-    @State var songs: [Song] = Song.data
+    // TODO: state variables, toggle favorites filter
+    private let songs: [Song] = Song.data
     
     private var header: some View {
         VStack(spacing: 10) {
@@ -31,12 +31,8 @@ struct SavedSongsView: View {
                 Spacer()
                     .frame(width: 10)
                 
-                Button {
-                    filterFavorites.toggle()
-                } label: {
-                    Image(systemName: filterFavorites ? "heart.fill" : "heart")
-                        .foregroundColor(.yellow)
-                }
+                Image(systemName: "heart")
+                    .foregroundColor(.yellow)
                 
                 Spacer()
             }
@@ -64,11 +60,9 @@ struct SavedSongsView: View {
     
     private var songsList: some View {
         ScrollView(.vertical, showsIndicators: true) {
-            ForEach($songs, id: \.hashValue) { song in
-                if song.isFavorite.wrappedValue || !filterFavorites {
-                    NavigationLink(destination: SongLyricsView(song: song)) {
-                        SavedSongRow(song: song)
-                    }
+            ForEach(songs, id: \.self) { song in
+                NavigationLink(destination: SongLyricsView(song: song)) {
+                    SavedSongRow(song: song)
                 }
             }
         }

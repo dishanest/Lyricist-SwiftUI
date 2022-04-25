@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct SongLyricsView: View {
+    // TODO: binding var, toggle favorite for song
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var song: Song
+    let song: Song
     
     private var headerText: some View {
         HStack {
@@ -93,12 +94,8 @@ struct SongLyricsView: View {
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    song.isFavorite.toggle()
-                } label: {
-                    Image(systemName: song.isFavorite ? "heart.fill" : "heart")
-                        .foregroundColor(.yellow)
-                }
+                Image(systemName: "heart")
+                    .foregroundColor(.yellow)
                 .frame(width: 22, height: 22)
             }
         }

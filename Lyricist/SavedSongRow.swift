@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SavedSongRow: View {
-    @Binding var song: Song
+    // TODO: binding var, toggle favorite
+    let song: Song
     
     var body: some View {
         HStack(alignment: .center) {
@@ -27,13 +28,9 @@ struct SavedSongRow: View {
             
             Spacer()
             
-            Button {
-                song.isFavorite.toggle()
-            } label: {
-                Image(systemName: song.isFavorite ? "heart.fill" : "heart")
-                    .foregroundColor(.yellow)
-                    .frame(width: 22, height: 22)
-            }
+            Image(systemName: "heart")
+                .foregroundColor(.yellow)
+                .frame(width: 22, height: 22)
         }
         .padding(.horizontal)
     }
